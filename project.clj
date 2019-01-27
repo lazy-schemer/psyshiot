@@ -33,8 +33,8 @@
 
                 :compiler {:main psyshiot.core
                            :asset-path "js/compiled/out"
-                           :output-to "resources/public/js/compiled/psyshiot.js"
-                           :output-dir "resources/public/js/compiled/out"
+                           :output-to "docs/js/compiled/psyshiot.js"
+                           :output-dir "docs/js/compiled/out"
                            :source-map-timestamp true
                            ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
                            ;; https://github.com/binaryage/cljs-devtools
@@ -44,7 +44,7 @@
                ;; lein cljsbuild once min
                {:id "min"
                 :source-paths ["src"]
-                :compiler {:output-to "resources/public/js/compiled/psyshiot.js"
+                :compiler {:output-to "docs/js/compiled/psyshiot.js"
                            :main psyshiot.core
                            :optimizations :simple
                            :pretty-print false}}]}
@@ -53,7 +53,7 @@
              ;; :server-port 3449 ;; default
              ;; :server-ip "127.0.0.1"
 
-             :css-dirs ["resources/public/css"] ;; watch and update CSS
+             :css-dirs ["docs/css"] ;; watch and update CSS
 
              ;; Start an nREPL server into the running figwheel process
              ;; :nrepl-port 7888
@@ -101,5 +101,5 @@
                    ;; :plugins [[cider/cider-nrepl "0.12.0"]]
                    :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}
                    ;; need to add the compliled assets to the :clean-targets
-                   :clean-targets ^{:protect false} ["resources/public/js/compiled"
+                   :clean-targets ^{:protect false} ["docs/js/compiled"
                                                      :target-path]}})
