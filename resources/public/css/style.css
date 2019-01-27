@@ -1,2 +1,15 @@
 /* some style */
 
+div {
+    font-size:18pt;
+}
+
+textarea {
+    width:100%;
+    border:1px solid black;
+    min-height: 150px;
+}
+
+.workarea {
+    text-align: center;
+}

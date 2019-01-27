@@ -1,12 +1,16 @@
 (ns psyshiot.core
-    (:require ))
+    (:require
+      [clojure.string :as str]
+      ))
 
 (enable-console-print!)
 
-(def s0 "가각갛까나a1힣")
-(def ga (.charCodeAt "가" 0))
-(def hih (.charCodeAt "힣" 0))
-(def kadokawa "카도카와")
+(def jQ js/jQuery)
+
+(def ta-from (jQ "#ta_from"))
+(def ta-to (jQ "#ta_to"))
+(def convert-btn (jQ "#convertBtn"))
+(def force-jong (jQ "#force_jong"))
 
 (defn split-cjj0 [code]
   (let [
@@ -25,6 +29,7 @@
       ch
       (split-cjj0 code)
       )))
+
 (defn join-cjj [ch]
   (if (string? ch)
     ch
@@ -37,9 +42,39 @@
           )))))
 
 (defn add-18 [ch]
-  (if (and (vector? ch) (== 0 (last ch)))
-    [(first ch) (second ch) 18]
+  (if (and (vector? ch))
+    (let [[c ju jo] ch]
+      (if (== 0 jo)
+        [c ju 18]
+        [c ju jo]))
     ch))
+
+(defn add-18-all [ch]
+  (if (and (vector? ch))
+    (let [[c ju _] ch]
+        [c ju 18])
+    ch))
+
+
+(defn init-core []
+
+  (-> convert-btn
+    (.off)
+    (.on "click"
+      (fn []
+        (let [add-f (if (.prop force-jong "checked") add-18-all add-18)]
+        (-> ta-to
+          (.val
+            (str/join
+              (map (comp join-cjj add-f split-cjj)
+                (-> ta-from .val)))
+            ))))
+        nil))
+  )
+
+
+(init-core)
+
 
 (defn on-js-reload []
   ;; optionally touch your app-state to force rerendering depending on
